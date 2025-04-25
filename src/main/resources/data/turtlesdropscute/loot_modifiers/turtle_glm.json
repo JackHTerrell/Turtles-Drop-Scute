@@ -1,0 +1,8 @@
+{
+  "type": "turtlesdropscute:add_drop",
+  "conditions": [],
+  "item": "minecraft:scute",
+  "amount": 1,
+  "loot_table": "minecraft:entities/turtle",
+  "chance": 1
+}
