@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "turtlesdropscute",
+	"version": "${version}",
+	"name": "Turtles Drop Scute",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Jackbusters"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/turtles-drop-scute",
+		"sources": "https://github.com/JackHTerrell/Turtles-Drop-Scute/"
+	},
+	"license": "All Rights Reserved",
+	"icon": "logo.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.jackbusters.turtlesdropscute.TurtlesDropScute"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "1.18.2",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

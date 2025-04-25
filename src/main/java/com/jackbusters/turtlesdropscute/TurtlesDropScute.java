@@ -1,19 +1,22 @@
 package com.jackbusters.turtlesdropscute;
 
-import com.jackbusters.turtlesdropscute.glm.GeneralSerializer;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.util.Identifier;
 
-@Mod(TurtlesDropScute.MOD_ID)
-public class TurtlesDropScute {
-    public static final String MOD_ID = "turtlesdropscute";
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, MOD_ID);
-    public static final RegistryObject<GlobalLootModifierSerializer<?>> ADD_DROP = LOOT_MODIFIERS.register("add_drop", GeneralSerializer::new);
-    public TurtlesDropScute(){
-        LOOT_MODIFIERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+public class TurtlesDropScute implements ModInitializer {
+    private static final Identifier TURTLE_LOCATION = EntityType.TURTLE.getLootTableId();
+    @Override
+    public void onInitialize() {
+        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (source.isBuiltin() && TURTLE_LOCATION.equals(id)) {
+                LootPool.Builder poolBuilder = LootPool.builder().with(ItemEntry.builder(Items.SCUTE));
+                tableBuilder.pool(poolBuilder);
+            }
+        });
     }
 }
