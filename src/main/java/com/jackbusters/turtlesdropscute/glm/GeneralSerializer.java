@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GeneralSerializer extends GlobalLootModifierSerializer<EpicLootModifier> {
     @Override
     public EpicLootModifier read(ResourceLocation location, JsonObject jsonObject, LootItemCondition[] iLootConditions) {
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(jsonObject, "item")));
+        Item item = GsonHelper.getAsItem(jsonObject, "item");
         int amount = GsonHelper.getAsInt(jsonObject, "amount");
         String lootTable = GsonHelper.getAsString(jsonObject, "loot_table");
         double chance = GsonHelper.getAsInt(jsonObject, "chance");
