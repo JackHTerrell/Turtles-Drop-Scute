@@ -1,20 +1,20 @@
 package com.jackbusters.turtlesdropscute.glm;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.Item;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class GeneralSerializer extends GlobalLootModifierSerializer<EpicLootModifier> {
     @Override
-    public EpicLootModifier read(ResourceLocation resourceLocation, JsonObject jsonObject, ILootCondition[] iLootConditions) {
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation((JSONUtils.getAsString(jsonObject, "item"))));
-        int amount = JSONUtils.getAsInt(jsonObject, "amount");
-        String lootTable = JSONUtils.getAsString(jsonObject, "loot_table");
-        double chance = JSONUtils.getAsInt(jsonObject, "chance");
+    public EpicLootModifier read(ResourceLocation location, JsonObject jsonObject, LootItemCondition[] iLootConditions) {
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(jsonObject, "item")));
+        int amount = GsonHelper.getAsInt(jsonObject, "amount");
+        String lootTable = GsonHelper.getAsString(jsonObject, "loot_table");
+        double chance = GsonHelper.getAsInt(jsonObject, "chance");
         // Deserialize other properties
         return new EpicLootModifier(iLootConditions, item, amount, lootTable, chance);
     }
