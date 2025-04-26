@@ -1,10 +1,10 @@
 package com.jackbusters.turtlesdropscute.glm;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 
 import javax.annotation.Nonnull;
@@ -22,11 +22,11 @@ public class EpicLootModifier extends LootModifier {
 
     public final Item item; // The item to generate
     public final int amount; // the number of items
-    public final ILootCondition[] conditionsIn;
+    public final LootItemCondition[] conditionsIn;
     public final String lootTable; // the loot table to generate the loot in (i.e. "minecraft:entities/wither").
     public final double chance; // The chance of the loot generating 0 being no chance, 1 being guaranteed.
 
-    protected EpicLootModifier(ILootCondition[] conditionsIn, Item item, int amount, String lootTable, double chance) {
+    protected EpicLootModifier(LootItemCondition[] conditionsIn, Item item, int amount, String lootTable, double chance) {
         super(conditionsIn);
         this.conditionsIn = conditionsIn;
         this.item = item;
@@ -37,18 +37,18 @@ public class EpicLootModifier extends LootModifier {
 
     @Nonnull
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> list, LootContext lootContext) {
-        if (lootContext.getQueriedLootTableId().equals(ResourceLocation.tryParse(lootTable))) {
-            ItemStack itemStack = new ItemStack(item, amount);
+    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+        if (context.getQueriedLootTableId().equals(ResourceLocation.tryParse(lootTable))) {
+            ItemStack itemStack = new ItemStack(() -> item, amount);
 
             if (chance == 1)
-                list.add(itemStack);
+                generatedLoot.add(itemStack);
             else {
                 double random = Math.random();
                 if (random < chance)
-                    list.add(itemStack);
+                    generatedLoot.add(itemStack);
             }
         }
-        return list;
+        return generatedLoot;
     }
 }
