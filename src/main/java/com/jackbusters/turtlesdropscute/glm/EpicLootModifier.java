@@ -5,14 +5,15 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
@@ -34,7 +35,7 @@ public class EpicLootModifier extends LootModifier {
     public final double chance; // The chance of the loot generating 0 being no chance, 1 being guaranteed.
 
     public static final Supplier<Codec<EpicLootModifier>> CODEC = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(instance -> codecStart(instance).and(ForgeRegistries.ITEMS.getCodec()
+            RecordCodecBuilder.create(instance -> codecStart(instance).and(BuiltInRegistries.ITEM.byNameCodec()
                             .fieldOf("item").forGetter(a -> a.item)).and(Codec.INT
                             .fieldOf("amount").forGetter(d -> d.amount)).and(Codec.STRING
                             .fieldOf("loot_table").forGetter(e -> e.lootTable)).and(Codec.DOUBLE
@@ -70,7 +71,7 @@ public class EpicLootModifier extends LootModifier {
     }
 
     @Override
-    public MapCodec<? extends IGlobalLootModifier> codec() {
+    public @NotNull MapCodec<? extends IGlobalLootModifier> codec() {
         return MAP_CODEC.get();
     }
 }
