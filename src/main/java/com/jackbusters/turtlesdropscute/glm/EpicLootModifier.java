@@ -2,6 +2,7 @@ package com.jackbusters.turtlesdropscute.glm;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
@@ -40,6 +41,8 @@ public class EpicLootModifier extends LootModifier {
                             .fieldOf("chance").forGetter(f -> f.chance))
                     .apply(instance, EpicLootModifier::new)));
 
+    public static final Supplier<MapCodec<EpicLootModifier>> MAP_CODEC = Suppliers.memoize(() -> MapCodec.assumeMapUnsafe(CODEC.get())); // Convert Codec to MapCodec so that it is usable.
+
     protected EpicLootModifier(LootItemCondition[] conditionsIn, Item item, int amount, String lootTable, double chance) {
         super(conditionsIn);
         this.conditionsIn = conditionsIn;
@@ -67,7 +70,7 @@ public class EpicLootModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
-        return CODEC.get();
+    public MapCodec<? extends IGlobalLootModifier> codec() {
+        return MAP_CODEC.get();
     }
 }
