@@ -1,7 +1,7 @@
 package com.jackbusters.turtlesdropscute;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
@@ -13,7 +13,7 @@ public class TurtlesDropScute implements ModInitializer {
     private static final RegistryKey<LootTable> TURTLE_LOCATION = EntityType.TURTLE.getLootTableId();
     @Override
     public void onInitialize() {
-        LootTableEvents.MODIFY.register((key, table, source) -> {
+        LootTableEvents.MODIFY.register((key, table, source, registries) -> {
             if (source.isBuiltin() && TURTLE_LOCATION.equals(key)) {
                 LootPool.Builder poolBuilder = LootPool.builder().with(ItemEntry.builder(Items.TURTLE_SCUTE));
                 table.pool(poolBuilder);
