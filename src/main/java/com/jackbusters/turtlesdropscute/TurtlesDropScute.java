@@ -10,7 +10,7 @@ import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.registry.RegistryKey;
 
 public class TurtlesDropScute implements ModInitializer {
-    private static final RegistryKey<LootTable> TURTLE_LOCATION = EntityType.TURTLE.getLootTableId();
+    private static final RegistryKey<LootTable> TURTLE_LOCATION = EntityType.TURTLE.getLootTableKey().orElseThrow();
     @Override
     public void onInitialize() {
         LootTableEvents.MODIFY.register((key, table, source, registries) -> {
