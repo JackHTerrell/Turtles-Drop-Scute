@@ -55,7 +55,7 @@ public class EpicLootModifier extends LootModifier {
 
     @Nonnull
     @Override
-    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         if (context.getQueriedLootTableId().equals(ResourceLocation.tryParse(lootTable))) {
             ItemStack itemStack = new ItemStack(() -> item, amount);
 
